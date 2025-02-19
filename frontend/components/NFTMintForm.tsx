@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import cube from "@/assets/cube.png"; // Importing icon
+import Image from "next/image";
 
 type NFTData = {
   name: string;
@@ -23,36 +25,53 @@ const NFTMintForm: React.FC<NFTMintFormProps> = ({ onMint }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow-lg p-6 rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">Mint Your NFT</h2>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-[#11182780] shadow-lg p-8 rounded-xl w-full max-w-lg mx-auto text-white"
+    >
+      <h2 className="text-2xl font-semibold mb-6 text-center">Mint Your NFT</h2>
+
+      {/* NFT Name */}
+      <label className="block text-sm font-medium mb-1 text-[#9CA3AF]">
+        NFT Name
+      </label>
       <input
         type="text"
-        placeholder="NFT Name"
+        placeholder="Enter NFT name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="border p-2 rounded w-full mb-2"
-      />
-      <textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="border p-2 rounded w-full mb-2"
-      />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) setImage(file);
-        }}
-        className="mb-2"
+        className="text-[#ADAEBC] text-sm  bg-[#1f2937] border border-[#374151] p-3 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
+      {/* Description */}
+      <label className="block text-sm font-medium mb-1 text-[#9CA3AF]">
+        Description
+      </label>
+      <textarea
+        placeholder="Describe your NFT"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="bg-[#1f2937] text-sm  border border-[#374151] p-3 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        rows={3}
+      />
+
+      {/* Image Upload */}
+      <label className="block text-sm font-medium mb-1 text-[#9CA3AF]">
+        Image URL
+      </label>
+      <input
+        type="text"
+        placeholder="Enter image URL"
+        onChange={(e) => setImage(e.target.value)}
+        className="bg-[#1f2937]  text-sm border border-[#374151] p-3 rounded-lg w-full mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      {/* Mint Button */}
       <button
         type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+        className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:opacity-90 transition-all"
       >
-        Mint NFT
+        <Image src={cube} alt="cube" /> Mint NFT
       </button>
     </form>
   );

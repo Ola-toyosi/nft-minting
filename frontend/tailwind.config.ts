@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "gradient-hero": "linear-gradient(90deg, #000000 0%, #111827 100%)",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
