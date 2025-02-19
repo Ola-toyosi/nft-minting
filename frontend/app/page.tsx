@@ -6,36 +6,77 @@ import NFTGallery from "@/components/NFTGallery";
 import Navbar from "@/components/Navbar";
 import NFTSuccessModal from "@/components/NFTSuccessModal";
 import Hero from "@/components/Hero";
+import axios from "axios";
+import { useState } from "react";
 
 type NFTData = {
   name: string;
   description: string;
-  image: File | string; // Adjust based on how you're handling images
+  logoUrl: string;
+  ownerWallet?: string;
+  nftId?: string;
 };
 
 export default function Home() {
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [nftSubmitData, setNFTSubmitData] = useState<NFTData | null>(null);
+  const [isMintSuccess, setIsMintSuccess] = useState(false);
+
   const handleMintNFT = async (nftData: NFTData) => {
-    console.log("Minting NFT:", nftData);
-    // Logic to interact with the backend will go here
-    
+    if (!walletAddress) {
+      alert("Please connect your wallet first!");
+      return;
+    }
+    // console.log(walletAddress);
+    const fullNFTData: NFTData = { ...nftData, ownerWallet: walletAddress };
+    // console.log("Minting NFT:", fullNFTData);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/nft",
+        fullNFTData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // console.log("Minted Successfully:", response.data);
+
+      setNFTSubmitData(response.data.nft);
+      setIsMintSuccess(true);
+    } catch (error) {
+      console.error("Minting failed:", error);
+    }
   };
+
+  const handleMintAnother = () => {
+    setNFTSubmitData(null);
+    setIsMintSuccess(false); // Hide success modal & reset form
+  };
+
   return (
-    <div className="flex flex-col bg-gradient-hero  px-4 items-center  min-h-screen py-0 pb-20 font-[family-name:var(--font-geist-sans)]">
-      <Navbar />
-      <main className="flex flex-col items-center">
+    <div className="flex flex-col bg-gradient-hero px-4 items-center min-h-screen max-w-screen py-0 pb-20 font-[family-name:var(--font-geist-sans)]">
+      <Navbar onWalletChange={setWalletAddress} />
+      <main className="flex flex-col items-center px-8 max-w-[100vw]">
         <Hero />
-        <div className=" bg-none p-6 py-12 w-full">
+        <div className="bg-none p-6 py-12 w-full">
           <div className="mx-auto mt-8">
-            <NFTMintForm onMint={handleMintNFT} />
+            {!isMintSuccess && <NFTMintForm onMint={handleMintNFT} />}
           </div>
         </div>
-        <NFTSuccessModal
-          nftName="Celestial Harmony #004"
-          description="A mesmerizing blend of cosmic elements and digital artistry"
-          nftId="#8F3E2A1D9C"
-          onMintAnother={() => console.log("Minting another NFT...")}
-          onShare={() => console.log("Sharing NFT...")}
-        />
+
+        {/* Show Success Modal only if minting was successful */}
+        {isMintSuccess && nftSubmitData && (
+          <NFTSuccessModal
+            nftName={nftSubmitData.name}
+            description={nftSubmitData.description}
+            logoUrl={nftSubmitData.logoUrl}
+            nftId={nftSubmitData.nftId}
+            onMintAnother={handleMintAnother}
+            onShare={() => console.log("Sharing NFT...")}
+          />
+        )}
+      <NFTGallery ownerWallet={walletAddress} />
       </main>
     </div>
   );

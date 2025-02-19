@@ -7,7 +7,8 @@ import Image from "next/image";
 type NFTData = {
   name: string;
   description: string;
-  image: File | string;
+  logoUrl: string;
+  ownerWallet: string;
 };
 
 type NFTMintFormProps = {
@@ -17,11 +18,12 @@ type NFTMintFormProps = {
 const NFTMintForm: React.FC<NFTMintFormProps> = ({ onMint }) => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [image, setImage] = useState<File | string>("");
+  const [logoUrl, setLogoUrl] = useState<string>("");
+  const [ownerWallet, setOwnerWallet] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onMint({ name, description, image });
+    onMint({ name, description, logoUrl, ownerWallet });
   };
 
   return (
@@ -40,7 +42,7 @@ const NFTMintForm: React.FC<NFTMintFormProps> = ({ onMint }) => {
         placeholder="Enter NFT name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="text-[#ADAEBC] text-sm  bg-[#1f2937] border border-[#374151] p-3 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="text-sm  bg-[#1f2937] border border-[#374151] p-3 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       {/* Description */}
@@ -61,8 +63,8 @@ const NFTMintForm: React.FC<NFTMintFormProps> = ({ onMint }) => {
       </label>
       <input
         type="text"
-        placeholder="Enter image URL"
-        onChange={(e) => setImage(e.target.value)}
+        placeholder="Enter logoUrl URL"
+        onChange={(e) => setLogoUrl(e.target.value)}
         className="bg-[#1f2937]  text-sm border border-[#374151] p-3 rounded-lg w-full mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 

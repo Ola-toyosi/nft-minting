@@ -30,9 +30,7 @@ export default async function RootLayout({
   const cookieStore = await cookies(); // Get cookie store
   const cookieList = cookieStore.getAll(); // Get all cookies as an array
   const cookieString = JSON.stringify(cookieList) // Convert cookies to string
-  console.log("Cookies in RootLayout:", cookieString); // Debugging
-  // const headersObj = await headers();
-  // const cookies = headersObj.get('cookie')
+  
   return (
     <html lang="en">
       <body

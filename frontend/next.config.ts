@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
     config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**", // Allows images from any domain
+      },
+    ],
+  },
 };
 
 export default nextConfig;

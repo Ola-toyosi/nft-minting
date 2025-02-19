@@ -1,8 +1,8 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const connectDB = require('./config/db');
-const nftRoutes = require('./routes/nftRoutes');
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const nftRoutes = require("./routes/nftRoutes");
 
 dotenv.config();
 
@@ -12,13 +12,19 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Adjust based on your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 app.use(express.json());
-app.use('/api/nft', nftRoutes);
+app.use("/api/nft", nftRoutes);
 
 // Test Route
-app.get('/', (req, res) => {
-    res.send('NFT Minting Backend is Running!');
+app.get("/", (req, res) => {
+  res.send("NFT Minting Backend is Running!");
 });
 
 const PORT = process.env.PORT || 5000;
