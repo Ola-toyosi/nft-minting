@@ -46,7 +46,7 @@ const NFTSuccessModal: React.FC<NFTSuccessModalProps> = ({
           // objectFit="cover"
           src={logoUrl}
           alt="NFT Logo"
-          className="h-40 max-w-[100px] rounded-md"
+          className="h-40 w-full rounded-md"
         />
         <div className="mt-4">
           <p className="text-[#E5E7EB] text-sm">NFT Name</p>
