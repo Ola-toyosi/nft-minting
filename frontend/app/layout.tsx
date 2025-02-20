@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import ContextProvider from "@/context";
-import { headers } from "next/headers"; // Import headers
 import { cookies } from "next/headers"; // Import cookies
 
 const geistSans = Geist({

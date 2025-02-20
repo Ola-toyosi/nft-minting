@@ -1,6 +1,5 @@
 import React from "react";
 import ShareIcon from "@mui/icons-material/Share";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import Image from "next/image";
 import cube from "@/assets/cube.png"; // Importing icon
 import check from "@/assets/div.png"; // Importing icon

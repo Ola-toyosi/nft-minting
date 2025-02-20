@@ -9,6 +9,7 @@ const WalletConnect = ({ onWalletChange }: { onWalletChange: (wallet: string | n
   useEffect(() => {
     if (isConnected && address) {
       setWalletAddress(address);
+      console.log(walletAddress)
       onWalletChange(address);
     } else {
       setWalletAddress(null);

@@ -1,6 +1,4 @@
 "use client";
-import Image from "next/image";
-import WalletConnect from "@/components/WalletConnect";
 import NFTMintForm from "@/components/NFTMintForm";
 import NFTGallery from "@/components/NFTGallery";
 import Navbar from "@/components/Navbar";
@@ -24,17 +22,16 @@ export default function Home() {
   const [isMintSuccess, setIsMintSuccess] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const { tokenExists, refetch, mintNFT, getReceipt } = useNFTMint();
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-  // const generateUniqueId = async (): Promise<number> => {
-  //   let tokenId;
-  //   do {
-  //     tokenId = Math.floor(Math.random() * 100000);
-  //     await refetch({ args: [tokenId] });
-  //   } while (tokenExists); // Ensure it's unique
-  //   return tokenId;
-  // };
-
+  const checkUniqueId = async (tokenId: number): Promise<number> => {
+    // let tokenId;
+    do {
+      // tokenId = Math.floor(Math.random() * 100000);
+      await refetch();
+    } while (tokenExists); // Ensure it's unique
+    return tokenId;
+  };
 
   const handleMintNFT = async (nftData: NFTData) => {
     if (!walletAddress) {
@@ -43,21 +40,20 @@ export default function Home() {
     }
     // console.log(walletAddress);
     const fullNFTData: NFTData = { ...nftData, ownerWallet: walletAddress };
+    if (!isMinting) {
+      setIsMinting(true);
+    }
     // console.log("Minting NFT:", fullNFTData);
     try {
-      const response = await axios.post(
-        `${backendUrl}api/nft`,
-        fullNFTData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${backendUrl}api/nft`, fullNFTData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       console.log("Saved Successfully:", response.data.nft);
 
       try {
-        const tokenId = response.data.nft.nftId;
+        const tokenId = await checkUniqueId(response.data.nft.nftId);
 
         const metadataUrl = `${backendUrl}api/nft/${tokenId}`;
 
