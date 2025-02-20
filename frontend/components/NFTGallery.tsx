@@ -45,7 +45,7 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
     };
 
     fetchNFTs();
-  }, [ownerWallet]);
+  }, [ownerWallet, backendUrl]);
 
   if (!ownerWallet) {
     return (

@@ -52,6 +52,8 @@ const modal = createAppKit({
   themeMode: "light",
 });
 
+console.log(modal);
+
 // Custom Theme
 const myCustomTheme: Theme = {
   blurs: {

@@ -1,6 +1,6 @@
-import { useReadContract, useWriteContract } from "wagmi";
+import { useReadContract } from "wagmi";
 import contractABI from "@/contracts/NFT_ABI.json";
-import { getTxpoolContent } from "viem/actions";
+// import { getTxpoolContent } from "viem/actions";
 import { waitForTransactionReceipt, writeContract } from "@wagmi/core";
 import { config } from "@/config";
 
@@ -46,7 +46,7 @@ export function useNFTMint() {
       });
       return transactionReceipt;
     } catch (err) {
-      console.log("Dee");
+      console.log("Dee:", err);
     }
   };
 

@@ -8,7 +8,6 @@ type NFTData = {
   name: string;
   description: string;
   logoUrl: string;
-  ownerWallet: string;
 };
 
 type NFTMintFormProps = {
@@ -19,11 +18,10 @@ const NFTMintForm: React.FC<NFTMintFormProps> = ({ onMint }) => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [logoUrl, setLogoUrl] = useState<string>("");
-  const [ownerWallet, setOwnerWallet] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onMint({ name, description, logoUrl, ownerWallet });
+    onMint({ name, description, logoUrl });
   };
 
   return (
