@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import cube from "@/assets/cube.png";
 
 type NFTData = {
   name: string;
@@ -11,14 +12,16 @@ type NFTData = {
   logoUrl: string;
 };
 
+// const DEFAULT_IMAGE = "/default-nft.png"; // Add a default image
+
 const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
   const [nftsData, setNftsData] = useState<NFTData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   useEffect(() => {
-    if (!ownerWallet) return; // Prevent API call if wallet is not connected
+    if (!ownerWallet) return;
 
     const fetchNFTs = async () => {
       setLoading(true);
@@ -29,7 +32,7 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
           `${backendUrl}api/nft/gallery/${ownerWallet}`
         );
 
-        if (res.data.nfts) {
+        if (Array.isArray(res.data.nfts)) {
           setNftsData(res.data.nfts);
         } else {
           console.error("Unexpected response format:", res.data);
@@ -63,10 +66,10 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
     return <p className="text-red-500 text-center mt-8">{error}</p>;
   }
 
-  if (!nftsData) {
+  if (nftsData.length === 0) {
     return (
       <p className="text-white text-center mt-8">
-        No NFTs found, please mint your first one using the widget above
+        No NFTs found, please mint your first one using the widget above.
       </p>
     );
   }
@@ -77,35 +80,29 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
         Your NFT Gallery
       </h2>
 
-      {nftsData.length === 0 ? (
-        <p className="text-gray-400 text-center">No NFTs found.</p>
-      ) : (
-        <div className="relative overflow-hidden w-full">
-          {/* Scrollable NFT container */}
-          <div className="flex gap-6 overflow-x-auto max-w-full scrollbar-hide mx-8 pb-4">
-            {nftsData.map((nft) => (
-              <div
-                key={nft.nftId || nft.name}
-                className="bg-[#11182750] w-[400px] rounded-2xl shadow-lg overflow-hidden border border-[#1F2937] shrink-0 scrollbar-hide"
-              >
-                <div className="relative h-56 w-full">
-                  <Image
-                    src={nft.logoUrl}
-                    alt={nft.name}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-t-2xl"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-bold text-white">{nft.name}</h3>
-                  <p className="text-gray-400">{nft.description}</p>
-                </div>
-              </div>
-            ))}
+      <div className="flex flex-wrap gap-6 justify-center">
+        {nftsData.map((nft) => (
+          <div
+            key={nft.nftId || nft.name}
+            className="bg-[#11182750] w-[400px] rounded-2xl shadow-lg overflow-hidden border border-[#1F2937]"
+          >
+            <div className="relative h-56 w-full">
+              <Image
+                src={nft.logoUrl || cube}
+                alt={nft.name}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-t-2xl"
+                onError={(e) => (e.currentTarget.src = cube.src)} // Fallback to default image
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-bold text-white">{nft.name}</h3>
+              <p className="text-gray-400">{nft.description}</p>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </section>
   );
 };
