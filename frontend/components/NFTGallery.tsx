@@ -68,7 +68,7 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
 
   if (nftsData.length === 0) {
     return (
-      <p className="text-white text-center mt-8">
+      <p className="text-white text-lg text-center m-8">
         No NFTs found, please mint your first one using the widget above.
       </p>
     );
@@ -80,11 +80,11 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
         Your NFT Gallery
       </h2>
 
-      <div className="flex flex-wrap gap-6 justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-[vw] justify-center">
         {nftsData.map((nft) => (
           <div
             key={nft.nftId || nft.name}
-            className="bg-[#11182750] w-[400px] rounded-2xl shadow-lg overflow-hidden border border-[#1F2937]"
+            className="bg-[#11182750] w-[100%] rounded-2xl shadow-lg overflow-hidden border border-[#1F2937] mx-auto"
           >
             <div className="relative h-56 w-full">
               <Image

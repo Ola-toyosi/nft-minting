@@ -22,6 +22,7 @@ export default function Home() {
   const [isMintSuccess, setIsMintSuccess] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const { tokenExists, refetch, mintNFT, getReceipt } = useNFTMint();
+
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const checkUniqueId = async (tokenId: number): Promise<number> => {
@@ -93,7 +94,11 @@ export default function Home() {
         <Hero />
         <div className="bg-none p-6 py-12 w-full">
           <div className="mx-auto mt-8">
-            {!isMintSuccess && <NFTMintForm onMint={handleMintNFT} />}
+            {!isMintSuccess && (
+              <div id="nft-mint-form">
+                <NFTMintForm onMint={handleMintNFT} />
+              </div>
+            )}
           </div>
         </div>
 

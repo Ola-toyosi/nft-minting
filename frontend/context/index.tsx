@@ -2,8 +2,8 @@
 
 import { wagmiAdapter, projectId } from "@/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createAppKit } from "@reown/appkit/react";
-import { mainnet, arbitrum } from "@reown/appkit/networks";
+// import { createAppKit } from "@reown/appkit/react";
+import { mainnet } from "@reown/appkit/networks";
 import React, { type ReactNode } from "react";
 import {
   cookieToInitialState,
@@ -29,30 +29,30 @@ if (!projectId) {
 }
 
 // Set up metadata
-const metadata = {
-  name: "nft-minting",
-  description: "NFT Minting",
-  url: "https://appkitexampleapp.com", // origin must match your domain & subdomain
-  icons: ["https://avatars.githubusercontent.com/u/179229932"],
-};
+// const metadata = {
+//   name: "nft-minting",
+//   description: "NFT Minting",
+//   url: "https://appkitexampleapp.com", // origin must match your domain & subdomain
+//   icons: ["https://avatars.githubusercontent.com/u/179229932"],
+// };
 
 // Create the modal
-const modal = createAppKit({
-  adapters: [wagmiAdapter],
-  projectId,
-  networks: [mainnet, arbitrum, sepolia],
-  defaultNetwork: sepolia,
-  metadata: metadata,
-  features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
-    email: true,
-    emailShowWallets: true,
-    socials: ["google", "x"],
-  },
-  themeMode: "light",
-});
+// const modal = createAppKit({
+//   adapters: [wagmiAdapter],
+//   projectId,
+//   networks: [mainnet, arbitrum, sepolia],
+//   defaultNetwork: sepolia,
+//   metadata: metadata,
+//   features: {
+//     analytics: true, // Optional - defaults to your Cloud configuration
+//     email: true,
+//     emailShowWallets: true,
+//     socials: ["google", "x"],
+//   },
+//   themeMode: "light",
+// });
 
-console.log(modal);
+// console.log(modal);
 
 // Custom Theme
 const myCustomTheme: Theme = {
