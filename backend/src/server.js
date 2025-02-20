@@ -14,7 +14,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // Adjust based on your frontend URL
+    origin: ["http://localhost:3000","https://nft-minting-sigma.vercel.app"], // Adjust based on your frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
   })
