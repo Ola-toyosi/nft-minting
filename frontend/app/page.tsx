@@ -8,6 +8,7 @@ import NFTSuccessModal from "@/components/NFTSuccessModal";
 import Hero from "@/components/Hero";
 import axios from "axios";
 import { useState } from "react";
+import { useNFTMint } from "@/hooks/useNFTMint";
 
 type NFTData = {
   name: string;
@@ -21,6 +22,17 @@ export default function Home() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [nftSubmitData, setNFTSubmitData] = useState<NFTData | null>(null);
   const [isMintSuccess, setIsMintSuccess] = useState(false);
+  const [isMinting, setIsMinting] = useState(false);
+  const { tokenExists, refetch, mintNFT, getReceipt } = useNFTMint();
+
+  // const generateUniqueId = async (): Promise<number> => {
+  //   let tokenId;
+  //   do {
+  //     tokenId = Math.floor(Math.random() * 100000);
+  //     await refetch({ args: [tokenId] });
+  //   } while (tokenExists); // Ensure it's unique
+  //   return tokenId;
+  // };
 
   const handleMintNFT = async (nftData: NFTData) => {
     if (!walletAddress) {
@@ -40,12 +52,34 @@ export default function Home() {
           },
         }
       );
-      // console.log("Minted Successfully:", response.data);
+      console.log("Saved Successfully:", response.data.nft);
+
+      try {
+        const tokenId = response.data.nft.nftId;
+
+        const metadataUrl = `http://localhost:5000/api/nft/${tokenId}`;
+
+        // Step 3: Mint NFT on the blockchain
+        const mintTx = await mintNFT(tokenId, metadataUrl);
+        // await mintTx.wait(); // Wait for confirmation
+
+        console.log("Transaction successful:", mintTx);
+
+        if (mintTx) {
+          const txReceipt = await getReceipt(mintTx);
+
+          console.log("Transaction successful:", txReceipt);
+        }
+      } catch (err) {
+        console.log("Error while minting onChain:", err);
+      }
 
       setNFTSubmitData(response.data.nft);
       setIsMintSuccess(true);
     } catch (error) {
       console.error("Minting failed:", error);
+    } finally {
+      setIsMinting(false);
     }
   };
 
@@ -76,7 +110,7 @@ export default function Home() {
             onShare={() => console.log("Sharing NFT...")}
           />
         )}
-      <NFTGallery ownerWallet={walletAddress} />
+        <NFTGallery ownerWallet={walletAddress} />
       </main>
     </div>
   );

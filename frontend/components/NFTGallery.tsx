@@ -62,9 +62,17 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
     return <p className="text-red-500 text-center mt-8">{error}</p>;
   }
 
+  if (!nftsData) {
+    return (
+      <p className="text-white text-center mt-8">
+        No NFTs found, please mint your first one using the widget above
+      </p>
+    );
+  }
+
   return (
     <section className="px-8 py-12 w-full">
-      <h2 className="text-xl font-bold text-left text-white mb-6">
+      <h2 className="text-xl font-bold text-left text-white pl-8 mb-6">
         Your NFT Gallery
       </h2>
 
