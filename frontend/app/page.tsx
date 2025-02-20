@@ -51,7 +51,7 @@ export default function Home() {
           "Content-Type": "application/json",
         },
       });
-      console.log("Saved Successfully:", response.data.nft);
+      // console.log("Saved Successfully:", response.data.nft);
 
       try {
         const tokenId = await checkUniqueId(response.data.nft.nftId);
@@ -62,9 +62,11 @@ export default function Home() {
         const mintTx = await mintNFT(tokenId, metadataUrl);
         // await mintTx.wait(); // Wait for confirmation
 
-        console.log("Transaction successful:", mintTx);
+        // console.log("Transaction successful:", mintTx);
 
         if (mintTx) {
+          setNFTSubmitData(response.data.nft);
+          setIsMintSuccess(true);
           const txReceipt = await getReceipt(mintTx);
 
           console.log("Transaction successful:", txReceipt);
@@ -72,9 +74,6 @@ export default function Home() {
       } catch (err) {
         console.log("Error while minting onChain:", err);
       }
-
-      setNFTSubmitData(response.data.nft);
-      setIsMintSuccess(true);
     } catch (error) {
       console.error("Minting failed:", error);
     } finally {
