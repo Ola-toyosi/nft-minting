@@ -52,9 +52,14 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
 
   if (!ownerWallet) {
     return (
-      <p className="text-white text-center mt-8">
-        Connect your wallet to view your NFTs.
-      </p>
+      <section className="px-8 py-12 w-full">
+        <h2 className="text-xl font-bold text-left text-white pl-8 mb-6">
+          Your NFT Gallery
+        </h2>
+        <p className="text-white text-lg text-center m-8 w-auto p-6">
+          Connect your wallet to view your NFTs.
+        </p>
+      </section>
     );
   }
 
@@ -68,9 +73,14 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
 
   if (nftsData.length === 0) {
     return (
-      <p className="text-white text-lg text-center m-8">
-        No NFTs found, please mint your first one using the widget above.
-      </p>
+      <section className="px-8 py-12 w-full">
+        <h2 className="text-xl font-bold text-left text-white pl-8 mb-6">
+          Your NFT Gallery
+        </h2>
+        <p className="text-white text-lg text-center m-8 w-auto p-6">
+          No NFTs found, please mint your first one using the widget above.
+        </p>
+      </section>
     );
   }
 
