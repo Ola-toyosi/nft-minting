@@ -6,8 +6,8 @@
 - `POST /api/nft/` - Mints a new NFT.
 
 ## 🔗 Deployed Links
-- **Frontend:** [https://your-frontend-url.com](https://nft-minting-sigma.vercel.app/)
-- **Backend:** [https://your-backend-url.com](https://nft-minting-waem.onrender.com)
+- **Frontend:** [NFT Minting Frontend](https://nft-minting-sigma.vercel.app/)
+- **Backend:** [NFT Minting Backend](https://nft-minting-waem.onrender.com)
 
 ## 🎥 Loom Videos
 - [Demo Walkthrough](https://loom.com/share/your-video-link)
