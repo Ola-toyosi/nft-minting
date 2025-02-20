@@ -24,6 +24,7 @@ export default function Home() {
   const [isMintSuccess, setIsMintSuccess] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const { tokenExists, refetch, mintNFT, getReceipt } = useNFTMint();
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
   // const generateUniqueId = async (): Promise<number> => {
   //   let tokenId;
@@ -33,6 +34,7 @@ export default function Home() {
   //   } while (tokenExists); // Ensure it's unique
   //   return tokenId;
   // };
+
 
   const handleMintNFT = async (nftData: NFTData) => {
     if (!walletAddress) {
@@ -44,7 +46,7 @@ export default function Home() {
     // console.log("Minting NFT:", fullNFTData);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/nft",
+        `${backendUrl}api/nft`,
         fullNFTData,
         {
           headers: {
@@ -57,7 +59,7 @@ export default function Home() {
       try {
         const tokenId = response.data.nft.nftId;
 
-        const metadataUrl = `http://localhost:5000/api/nft/${tokenId}`;
+        const metadataUrl = `${backendUrl}api/nft/${tokenId}`;
 
         // Step 3: Mint NFT on the blockchain
         const mintTx = await mintNFT(tokenId, metadataUrl);

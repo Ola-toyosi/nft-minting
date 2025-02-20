@@ -15,6 +15,7 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
   const [nftsData, setNftsData] = useState<NFTData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
   useEffect(() => {
     if (!ownerWallet) return; // Prevent API call if wallet is not connected
@@ -25,7 +26,7 @@ const NFTGallery = ({ ownerWallet }: { ownerWallet: string | null }) => {
 
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/nft/gallery/${ownerWallet}`
+          `${backendUrl}api/nft/gallery/${ownerWallet}`
         );
 
         if (res.data.nfts) {
